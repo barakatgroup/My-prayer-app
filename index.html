@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prayer Times | Духовная гармония</title>
+    <title>Prayer Times — Эстетика времени</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --accent: #4cc9f0;
-            --accent-glow: rgba(76, 201, 240, 0.3);
             --bg: #020617;
             --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -19,235 +18,196 @@
         body {
             background-color: var(--bg);
             color: white;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             overflow-x: hidden;
             line-height: 1.6;
         }
 
         /* Анимированный фон со звездами */
-        #canvas-stars {
+        canvas {
             position: fixed;
             top: 0; left: 0;
-            width: 100%; height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 100%);
+            background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
         }
 
-        /* Светящиеся пятна на фоне */
-        .blob {
-            position: absolute;
-            width: 500px; height: 500px;
-            background: var(--accent-glow);
-            filter: blur(120px);
-            border-radius: 50%;
-            z-index: -1;
-            animation: move 20s infinite alternate;
-        }
-
-        @keyframes move {
-            from { transform: translate(-10%, -10%); }
-            to { transform: translate(20%, 20%); }
-        }
-
-        /* Навигация */
         nav {
-            padding: 30px 10%;
+            padding: 40px 10%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(10px);
-            position: sticky; top: 0; z-index: 100;
+            position: absolute;
+            width: 100%;
+            z-index: 100;
         }
 
-        .logo { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; }
+        .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; }
         .logo span { color: var(--accent); }
 
-        /* Главная секция */
+        /* Секция Hero */
         .hero {
-            min-height: 90vh;
+            height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: space-around;
+            justify-content: center;
             padding: 0 10%;
-            gap: 40px;
+            text-align: center;
+            position: relative;
         }
 
-        .hero-text { max-width: 600px; }
-        .hero-text h1 {
-            font-size: 4.5rem;
-            line-height: 1;
-            margin-bottom: 20px;
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
             font-weight: 900;
-            background: linear-gradient(to bottom, #fff 40%, var(--accent));
+            line-height: 1;
+            margin-bottom: 30px;
+            background: linear-gradient(to bottom, #fff, var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
         }
 
-        .hero-text p {
-            font-size: 1.3rem;
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.4rem);
             color: #94a3b8;
             margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Кнопка с неоновым свечением */
+        /* Центральный завораживающий элемент вместо телефона */
+        .visual-core {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: 1;
+            animation: pulse 8s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.1; }
+            100% { transform: scale(1.3); opacity: 0.2; }
+        }
+
         .btn {
-            display: inline-block;
-            padding: 20px 50px;
-            background: var(--accent);
+            padding: 22px 60px;
+            background: white;
             color: var(--bg);
             text-decoration: none;
             font-weight: 800;
             border-radius: 100px;
-            font-size: 1.1rem;
-            box-shadow: 0 0 30px var(--accent-glow);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.4s;
+            display: inline-block;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         .btn:hover {
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 0 50px var(--accent);
+            transform: translateY(-5px);
+            background: var(--accent);
+            box-shadow: 0 15px 30px rgba(76, 201, 240, 0.4);
         }
 
-        /* Стеклянный телефон */
-        .phone-container {
-            position: relative;
-            width: 340px;
-            height: 680px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
-            border-radius: 50px;
-            border: 1px solid var(--border);
-            backdrop-filter: blur(20px);
-            padding: 25px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-        }
-
-        .phone-screen {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .glass-card {
-            background: rgba(255,255,255,0.03);
-            border-radius: 30px;
-            padding: 20px;
-            border: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .time-big { font-size: 2.5rem; font-weight: 900; color: var(--accent); margin: 10px 0; }
-        
-        .p-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 5px;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.9rem;
-        }
-
-        /* Секция функций */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+        /* Описание возможностей */
+        .description-grid {
             padding: 100px 10%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            background: rgba(255,255,255,0.02);
+            backdrop-filter: blur(20px);
         }
 
-        .f-card {
-            padding: 50px;
-            border-radius: 40px;
+        .desc-item h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .desc-item p {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .feature-tag {
+            display: inline-block;
+            padding: 8px 20px;
             background: var(--glass);
             border: 1px solid var(--border);
-            transition: 0.4s;
-            text-align: center;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            color: var(--accent);
         }
-
-        .f-card:hover {
-            background: rgba(255,255,255,0.06);
-            border-color: var(--accent);
-            transform: translateY(-10px);
-        }
-
-        .f-card i { font-size: 3rem; color: var(--accent); margin-bottom: 25px; }
 
         footer {
-            padding: 80px 10% 40px;
+            padding: 60px 10%;
             text-align: center;
             border-top: 1px solid var(--border);
-            opacity: 0.6;
         }
 
-        @media (max-width: 1100px) {
-            .hero { flex-direction: column; text-align: center; padding-top: 50px; }
-            .hero-text h1 { font-size: 3rem; }
-            .phone-container { width: 300px; height: 600px; }
+        @media (max-width: 800px) {
+            .description-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero h1 { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="canvas-stars"></canvas>
-    <div class="blob"></div>
+    <canvas id="stars"></canvas>
+    <div class="visual-core"></div>
 
     <nav>
         <div class="logo">PRAYER<span>TIMES</span></div>
-        <a href="#" class="btn" style="padding: 12px 30px; font-size: 0.9rem;">Запустить</a>
     </nav>
 
     <section class="hero">
-        <div class="hero-text">
-            <h1>Искусство быть вовремя</h1>
-            <p>Ваш цифровой компаньон, который объединяет древние традиции и современные технологии. Идеальная точность в эстетичном исполнении.</p>
-            <a href="#" class="btn">Начать погружение</a>
+        <div class="hero-content">
+            <h1>Гармония в каждом мгновении</h1>
+            <p>Мы создали не просто приложение, а безупречный инструмент для тех, кто ценит тишину, точность и чистоту веры в цифровом мире.</p>
+            <a href="#" class="btn">Открыть приложение</a>
         </div>
+    </section>
 
-        <div class="phone-container">
-            <div class="phone-screen">
-                <div style="font-size: 0.7rem; opacity: 0.4; text-align: center;">СЛЕДУЮЩЕЕ СОБЫТИЕ</div>
-                <div class="glass-card">
-                    <div style="font-size: 0.8rem; letter-spacing: 2px;">ASR</div>
-                    <div class="time-big" id="timer">00:45:12</div>
-                    <div style="font-size: 0.7rem; opacity: 0.5;">ДО НАЧАЛА МОЛИТВЫ</div>
-                </div>
-                
-                <div class="glass-card" style="padding: 10px 20px;">
-                    <div class="p-item"><span>Fajr</span> <b>05:22</b></div>
-                    <div class="p-item" style="color: var(--accent); border-color: var(--accent);"><span>Dhuhr</span> <b>13:10</b></div>
-                    <div class="p-item"><span>Asr</span> <b>16:45</b></div>
-                    <div class="p-item"><span>Maghrib</span> <b>19:50</b></div>
-                    <div class="p-item" style="border:none;"><span>Isha</span> <b>21:15</b></div>
-                </div>
+    <section class="description-grid">
+        <div class="desc-item">
+            <h2>Безупречная точность</h2>
+            <p>Забудьте о ручных настройках. Наши алгоритмы используют данные космической навигации для вычисления времени с точностью до секунды, где бы вы ни находились.</p>
+            <div>
+                <span class="feature-tag">Umm al-Qura</span>
+                <span class="feature-tag">MWL</span>
+                <span class="feature-tag">GPS Sync</span>
+            </div>
+        </div>
+        <div class="desc-item">
+            <h2>Чистый разум</h2>
+            <p>В интерфейсе нет ничего лишнего. Мы убрали визуальный шум, чтобы вы могли сосредоточиться на главном. Только эстетика, глубокие темные тона и покой.</p>
+            <div>
+                <span class="feature-tag">No Ads</span>
+                <span class="feature-tag">Dark Mode</span>
+                <span class="feature-tag">Glassmorphism</span>
             </div>
         </div>
     </section>
 
-    <section class="features">
-        <div class="f-card">
-            <i class="fas fa-atom"></i>
-            <h3>Интеллект</h3>
-            <p>Алгоритмы высочайшей точности, адаптирующиеся под любую точку планеты в реальном времени.</p>
-        </div>
-        <div class="f-card">
-            <i class="fas fa-wind"></i>
-            <h3>Легкость</h3>
-            <p>Ничего лишнего. Только вы, ваше время и безупречный интерфейс, не перегруженный рекламой.</p>
-        </div>
-        <div class="f-card">
-            <i class="fas fa-fingerprint"></i>
-            <h3>Методы</h3>
-            <p>Гибкая настройка стандартов расчета: от Umm al-Qura до Всемирной Мусульманской Лиги.</p>
-        </div>
-    </section>
-
     <footer>
-        <p>© 2026 PRAYER TIMES. Спроектировано для вдохновения.</p>
-        <a href="app-ads.txt" style="color: white; font-size: 0.7rem; text-decoration: none; opacity: 0.5;">ADS CONFIGURATION</a>
+        <p>© 2026 Prayer Times. Твое время. Твоя вера. Твой покой.</p>
+        <div style="margin-top: 20px; opacity: 0.4; font-size: 0.8rem;">
+            <a href="app-ads.txt" style="color:white; text-decoration:none;">ADS CONFIGURATION</a>
+        </div>
     </footer>
 
     <script>
-        // Скрипт для живого фона со звездами
-        const canvas = document.getElementById('canvas-stars');
+        const canvas = document.getElementById('stars');
         const ctx = canvas.getContext('2d');
         let stars = [];
 
@@ -255,7 +215,6 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-
         window.onresize = resize;
         resize();
 
@@ -263,29 +222,22 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 1.5;
-                this.speed = Math.random() * 0.05;
+                this.size = Math.random() * 1.2;
+                this.opacity = Math.random();
             }
             draw() {
-                ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
             }
-            update() {
-                this.y -= this.speed;
-                if (this.y < 0) this.y = canvas.height;
-            }
         }
 
-        for (let i = 0; i < 150; i++) stars.push(new Star());
+        for(let i=0; i<200; i++) stars.push(new Star());
 
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            stars.forEach(s => {
-                s.update();
-                s.draw();
-            });
+            ctx.clearRect(0,0, canvas.width, canvas.height);
+            stars.forEach(s => s.draw());
             requestAnimationFrame(animate);
         }
         animate();
